@@ -15,6 +15,7 @@ import {
   Keyboard,
   Modal,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // --- HILFSFUNKTIONEN ---
 const formatDate = (date) => {
@@ -376,6 +377,43 @@ export default function App() {
 
   const getCategoryColor = (cat) => cat === 'Arbeit' ? theme.orange : theme.primary;
 
+  useEffect(() => {
+    const loadSavedData = async () => {
+      try {
+        const sEntries = await AsyncStorage.getItem('entries');
+        if (sEntries) setEntries(JSON.parse(sEntries));
+        const sVacations = await AsyncStorage.getItem('vacations');
+        if (sVacations) setVacations(JSON.parse(sVacations));
+        const sSleep = await AsyncStorage.getItem('sleepSessions');
+        if (sSleep) setSleepSessions(JSON.parse(sSleep));
+        const sLimit = await AsyncStorage.getItem('limit');
+        if (sLimit) setLimit(JSON.parse(sLimit));
+        const sGoalPerDay = await AsyncStorage.getItem('goalPerDay');
+        if (sGoalPerDay) setGoalPerDay(JSON.parse(sGoalPerDay));
+        const sGoalDays = await AsyncStorage.getItem('goalDays');
+        if (sGoalDays) setGoalDays(JSON.parse(sGoalDays));
+        const sDarkMode = await AsyncStorage.getItem('darkMode');
+        if (sDarkMode) setDarkMode(JSON.parse(sDarkMode));
+      } catch (e) {}
+    };
+    loadSavedData();
+  }, []);
+
+  useEffect(() => {
+    const saveData = async () => {
+      try {
+        await AsyncStorage.setItem('entries', JSON.stringify(entries));
+        await AsyncStorage.setItem('vacations', JSON.stringify(vacations));
+        await AsyncStorage.setItem('sleepSessions', JSON.stringify(sleepSessions));
+        await AsyncStorage.setItem('limit', JSON.stringify(limit));
+        await AsyncStorage.setItem('goalPerDay', JSON.stringify(goalPerDay));
+        await AsyncStorage.setItem('goalDays', JSON.stringify(goalDays));
+        await AsyncStorage.setItem('darkMode', JSON.stringify(darkMode));
+      } catch (e) {}
+    };
+    saveData();
+  }, [entries, vacations, sleepSessions, limit, goalPerDay, goalDays, darkMode]);
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.bg }]}>
       <StatusBar barStyle={darkMode ? "light-content" : "dark-content"} />
@@ -606,6 +644,13 @@ export default function App() {
               <Text style={[styles.cardTitle, { color: theme.text }]}>⚙️ Einstellungen</Text>
             </View>
 
+            <View style={[styles.card, { backgroundColor: theme.white }]}>
+              <Text style={[styles.cardTitle, { color: theme.text }]}>🌙 Dark Mode</Text>
+              <TouchableOpacity style={styles.primaryBtn} onPress={() => setDarkMode(prev => !prev)}>
+                <Text style={styles.btnText}>{darkMode ? 'Deaktivieren' : 'Aktivieren'}</Text>
+              </TouchableOpacity>
+            </View>
+
             <TouchableOpacity style={[styles.accordionHeader, { backgroundColor: theme.white }]} onPress={() => { setShowLimit(prev => !prev); setShowGoal(false); setShowVacation(false); }}>
               <Text style={[styles.accordionTitle, { color: theme.text }]}>{showLimit ? '▼' : '▶'} ⚙️ Tageslimit</Text>
             </TouchableOpacity>
@@ -654,12 +699,6 @@ export default function App() {
             )}
 
             <View style={[styles.card, { backgroundColor: theme.white }]}>
-              <Text style={[styles.cardTitle, { color: theme.text }]}>👨‍💻 Entwicklerinfo</Text>
-              <Text style={[styles.label, { color: theme.sub }]}>Entwickler: Özgür Cetin</Text>
-              <Text style={[styles.label, { color: theme.sub, marginTop: 4 }]}>E-Mail: ozgur.cetin@web.de</Text>
-            </View>
-
-            <View style={[styles.card, { backgroundColor: theme.white }]}>
               <Text style={[styles.cardTitle, { color: theme.text }]}>💾 Backup</Text>
               <TextInput style={[styles.input, { width: '100%', marginBottom: 12, height: 60, color: theme.text, backgroundColor: darkMode ? '#3A3A3C' : '#F9F9F9' }]} multiline value={importText} onChangeText={setImportText} placeholder="JSON Text..." placeholderTextColor={theme.sub} />
               <View style={styles.rowBetween}>
@@ -669,10 +708,9 @@ export default function App() {
             </View>
 
             <View style={[styles.card, { backgroundColor: theme.white }]}>
-              <Text style={[styles.cardTitle, { color: theme.text }]}>🌙 Dark Mode</Text>
-              <TouchableOpacity style={styles.primaryBtn} onPress={() => setDarkMode(prev => !prev)}>
-                <Text style={styles.btnText}>{darkMode ? 'Deaktivieren' : 'Aktivieren'}</Text>
-              </TouchableOpacity>
+              <Text style={[styles.cardTitle, { color: theme.text }]}>👨‍💻 Entwicklerinfo</Text>
+              <Text style={[styles.label, { color: theme.sub }]}>Entwickler: Özgür Cetin</Text>
+              <Text style={[styles.label, { color: theme.sub, marginTop: 4 }]}>E-Mail: ozgur.cetin@web.de</Text>
             </View>
 
             <View style={{ height: 100 }} />
@@ -823,4 +861,5 @@ const styles = StyleSheet.create({
   flatSub: { fontSize: 11 },
   flatValue: { fontSize: 20, fontWeight: '800' }
 });
+
 
