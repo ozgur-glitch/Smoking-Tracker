@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Smoking Stop",
+    "slug": "smoking-stop-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#34C759"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.deinname.smokingstop"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#34C759"
+      },
+      "package": "com.deinname.smokingstop"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
