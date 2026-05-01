@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
   heroTimer: { fontSize: 40, fontWeight: '800' },
   recordsRow: { flexDirection: 'row', marginTop: 15 },
   recordCard: { flex: 1, borderRadius: 12, padding: 10, alignItems: 'center' },
-  recordSpacing: { width: 10 },
+  recordSpacing: { width: 10 }, // DIESE ZEILE FIXXT DEN FEHLER
   recordValue: { fontSize: 14, fontWeight: '700' },
   card: { borderRadius: 15, padding: 15, marginBottom: 15 },
   cardTitle: { fontSize: 16, fontWeight: '700' },
