@@ -1,24 +1,29 @@
 {
   "expo": {
-    "name": "Smoking Stop",
-    "slug": "smoking-stop-app",
+    "name": "Smoke Tracker",
+    "slug": "smoke-tracker-41b1tdtnp1inzfa-xfzv",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./icon.png",
     "userInterfaceStyle": "automatic",
+    "extra": {
+      "eas": {
+        "projectId": "f4a7e7c2-9d45-421e-8bb1-68540d317608"
+      }
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.deinname.smokingstop"
+      "bundleIdentifier": "com.ozce.smoketracker"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./icon.png",
         "backgroundColor": "#34C759"
       },
-      "package": "com.deinname.smokingstop"
+      "package": "com.ozce.smoketracker"
     },
     "web": {
       "favicon": "./icon.png"
